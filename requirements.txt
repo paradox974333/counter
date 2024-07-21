@@ -1,3 +1,5 @@
-Flask
-peewee
-flask-cors
+Flask==2.3.3
+Flask-CORS==3.0.10
+peewee==3.16.0
+playhouse==3.16.0
+
