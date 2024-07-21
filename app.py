@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from peewee import Model, IntegerField, DateTimeField, SqliteDatabase
+from peewee import Model, IntegerField, DateTimeField, SqliteDatabase, SQL
 from flask_cors import CORS
 from datetime import datetime, timedelta
 import os
