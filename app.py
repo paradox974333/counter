@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from peewee import Model, IntegerField, SqliteDatabase
+import os
 
 app = Flask(__name__)
 
@@ -20,7 +21,6 @@ with app.app_context():
 
 @app.route('/increment')
 def increment_views():
-    # Retrieve or create a ViewCount record
     view_count, created = ViewCount.get_or_create()
     view_count.count += 1
     view_count.save()
@@ -28,10 +28,9 @@ def increment_views():
 
 @app.route('/count')
 def get_count():
-    # Retrieve the ViewCount record
     view_count = ViewCount.select().first()
     return jsonify({"views": view_count.count if view_count else 0})
 
 if __name__ == '__main__':
-    # Use Render's default port and host
-    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)), debug=True)
+    port = int(os.environ.get('PORT', 5000))  # Get PORT from environment or default to 5000
+    app.run(host='0.0.0.0', port=port, debug=True)  # Use the retrieved port
