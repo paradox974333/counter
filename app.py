@@ -1,14 +1,13 @@
 from flask import Flask, jsonify
-from peewee import Model, IntegerField, SqliteDatabase
+from peewee import Model, IntegerField, PostgresqlDatabase
 from flask_cors import CORS
 import os
 
 app = Flask(__name__)
 CORS(app)
 
-# Use a more permanent location for the database
-db_path = os.path.join('/data', 'persistent_views.db')  # Adjust '/data' based on your Render disk mount path
-db = SqliteDatabase(db_path)
+# Use the connection string for database configuration
+db = PostgresqlDatabase(None)
 
 class BaseModel(Model):
     class Meta:
@@ -18,6 +17,7 @@ class ViewCount(BaseModel):
     count = IntegerField(default=0)
 
 def initialize_database():
+    db.init(os.environ['DATABASE_URL'])
     with db:
         db.create_tables([ViewCount], safe=True)
 
