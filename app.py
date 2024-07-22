@@ -7,7 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Use a more permanent location for the database
-db_path = os.path.join(os.path.dirname(__file__), 'persistent_views.db')
+db_path = os.path.join('/data', 'persistent_views.db')  # Adjust '/data' based on your Render disk mount path
 db = SqliteDatabase(db_path)
 
 class BaseModel(Model):
