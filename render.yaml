@@ -1,10 +1,9 @@
 services:
   - type: web
-    name: flask-app
+    name: your-app-name
     env: python
-    plan: free
-    buildCommand: ./start.sh
-    startCommand: python app.py
-    routes:
-      - src: /.*  
-        dest: /
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.2
