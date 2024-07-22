@@ -17,7 +17,7 @@ class ViewCount(BaseModel):
     count = IntegerField(default=0)
 
 def initialize_database():
-    db.init(os.environ['DATABASE_URL'])
+    db.init(os.environ['postgresql://postgres.fmgtdwisxldecgkzdnuf: UC0reusq9SlUzTq5@aws-0-ap-south-1.pooler.supabase.com:6543/postgres'])
     with db:
         db.create_tables([ViewCount], safe=True)
 
