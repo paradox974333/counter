@@ -1,4 +1,2 @@
-venv/
-*.pyc
 __pycache__/
-view_count.txt
+*.pyc
