@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
 import threading
 import logging
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
