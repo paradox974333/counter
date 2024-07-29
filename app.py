@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 from flask_cors import CORS
 import threading
 import logging
+import os
 
 app = Flask(__name__)
 CORS(app)  # This enables CORS for all routes
@@ -45,4 +46,5 @@ def health_check():
     return jsonify({"status": "healthy"}), 200
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
