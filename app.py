@@ -1,5 +1,4 @@
 from flask import Flask, jsonify
-import os
 import threading
 import logging
 
@@ -11,22 +10,17 @@ logging.basicConfig(level=logging.INFO)
 VIEW_COUNT = 0
 count_lock = threading.Lock()
 
-def get_view_count():
-    global VIEW_COUNT
-    with count_lock:
-        return VIEW_COUNT
-
 def increment_view_count():
     global VIEW_COUNT
     with count_lock:
         VIEW_COUNT += 1
+        logging.info(f"Incremented count to {VIEW_COUNT}")
         return VIEW_COUNT
 
 @app.route('/increment', methods=['GET'])
 def increment_views():
     try:
         count = increment_view_count()
-        logging.info(f"Incremented count to {count}")
         return jsonify({"views": count})
     except Exception as e:
         logging.error(f"Error in increment_views: {str(e)}")
@@ -35,7 +29,8 @@ def increment_views():
 @app.route('/count', methods=['GET'])
 def get_count():
     try:
-        count = get_view_count()
+        with count_lock:
+            count = VIEW_COUNT
         logging.info(f"Retrieved count: {count}")
         return jsonify({"views": count})
     except Exception as e:
@@ -48,5 +43,4 @@ def health_check():
     return jsonify({"status": "healthy"}), 200
 
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=False)
